@@ -2,7 +2,7 @@
 #include <cmath>
 #include <array>
 #include <iostream>
-
+#include "Vector.h"
 #define EntListBase 0xB35C3C
 #define EntListBase2 0xB35CA8
 

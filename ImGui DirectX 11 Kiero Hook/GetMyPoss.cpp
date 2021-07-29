@@ -1,7 +1,7 @@
 #include "includes.h"
 #include <iostream>
 #define LocalPlayerBase 0xB35C3C
-
+#include "Vector.h"
 Vector3 GetMyPoss::Get()
 {
     offsetsM offsets;

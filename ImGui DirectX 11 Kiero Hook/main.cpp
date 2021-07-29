@@ -44,6 +44,7 @@ BOOL __stdcall StartThread(HMODULE hModule, LPTHREAD_START_ROUTINE StartAddress)
 bool init = false;
 HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
+	WallHack wall;
 	uintptr_t gameoverlayrenderer = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("gameoverlayrenderer.dll")));
 	int height = *reinterpret_cast<int*>(gameoverlayrenderer + 0x1418DC);
 	int width = *reinterpret_cast<int*>(gameoverlayrenderer + 0x1418D8);
@@ -79,14 +80,14 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 	if (show)
 	{
 		
-
+		
 		ImGui::Begin("BLOCKPOST-US");
 		ImGui::Checkbox("AllName", &Settings.NameActive);
 		ImGui::Checkbox("AimBot", &Settings.AimActive);
 		ImGui::Checkbox("AimBotKey", &Settings.AimKeyActive);
 		ImGui::Checkbox("TeamCheck", &Settings.TeamCheck);
 		ImGui::SliderFloat("Distance", &Settings.Dinstace,1,250);
-	//	ImGui::Checkbox("fovActive", &Settings.fovActive);
+		ImGui::Checkbox("WallHack", &Settings.Wallhack);
 		ImGui::SliderFloat("Fov", &Settings.fov, 2.8, 360);
 		ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX, ScreenCenterY }, Settings.fov * 3, ImColor{ 255, 0, 0, 255 });
 		
@@ -98,14 +99,33 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 	}
 	else
 	{
-		ImGui::Begin("dasdas", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoCollapse |
-			ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar);
+		if (Settings.Wallhack)
+		{
+			ImGui::Begin("dasdas1", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoCollapse |
+				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar);
+
+			//ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX + aim.mysackx * aim.dist / 30, ScreenCenterY + aim.mysacky * aim.dist / 30 },  40, ImColor{ 235, 52, 232, 255 });
+			wall.Render();
+			ImGui::GetBackgroundDrawList()->AddCircle({ wall.pos.x,wall.pos.y }, 10, ImColor{ 235, 52, 232, 255 });
+
+			ImGui::End();
+			ImGui::Render();
+			
+		}
+		else
+		{
+			ImGui::Begin("dasdas", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoCollapse |
+				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar);
+
+			//ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX + aim.mysackx * aim.dist / 30, ScreenCenterY + aim.mysacky * aim.dist / 30 },  40, ImColor{ 235, 52, 232, 255 });
+
+
+			ImGui::End();
+			ImGui::Render();
+		}
 		
-		//ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX + aim.mysackx * aim.dist / 30, ScreenCenterY + aim.mysacky * aim.dist / 30 },  40, ImColor{ 235, 52, 232, 255 });
-			ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX , ScreenCenterY }, 5+20*atan(5/aim.dist*2) , ImColor{ 235, 52, 232, 255 });
-		ImGui::End();
-		ImGui::Render();
 	}
+	
 	ImGui::EndFrame();
 	pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -114,15 +134,17 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 
 DWORD WINAPI FunctTread(HMODULE hMod)
 {
-	WallHack wal;
+	
 	Name name;
 	
 	
-	wal.Render();
+	
 	while (true)
 	{
+		
 		aim.fov = 2+atan(aim.dist) * Settings.fov;
 		aim.distanceFov = Settings.Dinstace;
+		
 		if (Settings.NameActive)
 		{
 			Name name;

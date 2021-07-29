@@ -188,6 +188,7 @@
     <ClInclude Include="GetMyPoss.h" />
     <ClInclude Include="PlayerDataArray.h" />
     <ClInclude Include="PlayerData.h" />
+    <ClInclude Include="sackdata.h" />
     <ClInclude Include="ViewAngle.h" />
     <ClInclude Include="NamePars.h" />
     <ClInclude Include="imgui\imconfig.h" />

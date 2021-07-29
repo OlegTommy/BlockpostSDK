@@ -1,6 +1,6 @@
 #pragma once
 #include "includes.h"
-
+#include "Vector.h"
 class AimBot
 {
 public:
