@@ -3,6 +3,7 @@
 #include <array>
 #include <iostream>
 #include "Vector.h"
+//#include "framework/il2cpp-appdata.h"
 #define EntListBase 0xB35C3C
 #define EntListBase2 0xB35CA8
 
@@ -57,6 +58,7 @@ PlayerData* GetLocals()
     PlayerData* uranus = (PlayerData*)offsets.GetPointerAddress(baseModule + EntListBase, { 0x5c, 0x13c , 0x0 });
     return uranus;
 }
+
 PlayerData* Gets(UINT32 i)
 {
     offsetsM offsets;
@@ -91,16 +93,16 @@ void AimBot::Render()
         {
             while (true)
             {
-                if (!GetAsyncKeyState(VK_LBUTTON) && toggle == true)
+                if (!GetAsyncKeyState(VK_LBUTTON) && !GetAsyncKeyState(VK_LSHIFT) && toggle == true)
                     break;
-                if (!GetAsyncKeyState(VK_LSHIFT) && toggle == true)
-                    break;
+      
                 if (enemy->spawnprotect)
                     break;
                 if (enemy->health <= 0)
                     break;
                
                 Vector3 as = enemy->Pos;
+
                 Vector3 sack2 = MyPlayer->Pos;
                 if (sack2.x != -1 && sack2.y != -1 && sack2.z != -1)
                 {

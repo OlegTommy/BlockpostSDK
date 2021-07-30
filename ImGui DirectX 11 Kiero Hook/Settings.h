@@ -11,5 +11,6 @@ public:
 	bool AimActive = false;
 	bool AimKeyActive = false;
 	bool TeamCheck = false;
+	bool espTeamCheck = false;
 };
 

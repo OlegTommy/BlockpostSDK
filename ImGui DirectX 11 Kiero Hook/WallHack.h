@@ -4,6 +4,6 @@
 class WallHack
 {
 public:
-	void Render();
-	Vector2 pos = { 0,0 };
+	Vector2 Renders(int i);
+
 };

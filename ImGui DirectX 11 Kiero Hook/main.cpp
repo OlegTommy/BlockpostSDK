@@ -88,6 +88,7 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		ImGui::Checkbox("TeamCheck", &Settings.TeamCheck);
 		ImGui::SliderFloat("Distance", &Settings.Dinstace,1,250);
 		ImGui::Checkbox("WallHack", &Settings.Wallhack);
+		ImGui::Checkbox("WallHackTeamCheck", &Settings.espTeamCheck);
 		ImGui::SliderFloat("Fov", &Settings.fov, 2.8, 360);
 		ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX, ScreenCenterY }, Settings.fov * 3, ImColor{ 255, 0, 0, 255 });
 		
@@ -105,8 +106,22 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 				ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar);
 
 			//ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX + aim.mysackx * aim.dist / 30, ScreenCenterY + aim.mysacky * aim.dist / 30 },  40, ImColor{ 235, 52, 232, 255 });
-			wall.Render();
-			ImGui::GetBackgroundDrawList()->AddCircle({ wall.pos.x,wall.pos.y }, 10, ImColor{ 235, 52, 232, 255 });
+			for (int i = 0; i < 40; i++)
+			{
+				Vector2 Temper = wall.Renders(i);
+				if (Temper.d == -1)
+					continue;
+
+				if (Temper.d == 3 )
+				{
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 0, 52, 255, 255 });
+				}
+				else
+				{
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 235, 52, 232, 255 });
+				}
+			}
+
 
 			ImGui::End();
 			ImGui::Render();
