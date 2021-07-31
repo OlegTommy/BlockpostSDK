@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AutomaticW.cpp" />
     <ClCompile Include="framework\helpers.cpp" />
     <ClCompile Include="framework\il2cpp-init.cpp" />
     <ClCompile Include="framework\pch-il2cpp.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aim.h" />
+    <ClInclude Include="AutomaticW.h" />
     <ClInclude Include="framework\helpers.h" />
     <ClInclude Include="framework\il2cpp-api-functions-ptr.h" />
     <ClInclude Include="framework\il2cpp-api-functions.h" />

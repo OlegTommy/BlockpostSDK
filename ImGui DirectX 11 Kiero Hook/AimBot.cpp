@@ -68,7 +68,9 @@ PlayerData* Gets(UINT32 i)
 }
 void AimBot::Render()
 {
-    
+
+
+
     GetMyPoss startpos;
     AngleView view;
     offsetsM offsets;

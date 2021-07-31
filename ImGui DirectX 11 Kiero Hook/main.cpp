@@ -88,7 +88,7 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		ImGui::Checkbox("TeamCheck", &Settings.TeamCheck);
 		ImGui::SliderFloat("Distance", &Settings.Dinstace,1,250);
 		ImGui::Checkbox("WallHack", &Settings.Wallhack);
-		ImGui::Checkbox("WallHackTeamCheck", &Settings.espTeamCheck);
+		//ImGui::Checkbox("WallHackTeamCheck", &Settings.espTeamCheck);
 		ImGui::SliderFloat("Fov", &Settings.fov, 2.8, 360);
 		ImGui::GetBackgroundDrawList()->AddCircle({ ScreenCenterX, ScreenCenterY }, Settings.fov * 3, ImColor{ 255, 0, 0, 255 });
 		
@@ -114,11 +114,11 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 
 				if (Temper.d == 3 )
 				{
-					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 0, 52, 255, 255 });
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 60, 52, 222, 255 }, 12, 2);
 				}
 				else
 				{
-					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 235, 52, 232, 255 });
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 235, 52, 200, 255 },12,2);
 				}
 			}
 
@@ -151,9 +151,8 @@ DWORD WINAPI FunctTread(HMODULE hMod)
 {
 	
 	Name name;
-	
-	
-	
+	AutomaticW asdddd; 
+	asdddd.Render();
 	while (true)
 	{
 		

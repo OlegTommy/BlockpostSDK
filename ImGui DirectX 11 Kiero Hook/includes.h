@@ -15,7 +15,7 @@
 #include "ViewAngle.h"
 #include "PlayerData.h"
 #include "PlayerDataArray.h"
-
+#include "AutomaticW.h"
 typedef HRESULT(__stdcall* Present) (IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 typedef LRESULT(CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 typedef uintptr_t PTR;
