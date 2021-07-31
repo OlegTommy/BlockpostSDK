@@ -63,11 +63,15 @@ Vector2 WallHack::Renders(int i)
         posInScreenTrue.x = projected.x;
         posInScreenTrue.y = app::Screen_get_height(nullptr) - projected.y;
 
+        app::String* asdz= (enemy->fields.name);
+        WallHackNames* chars = (WallHackNames*)asdz;
+    
+ 
         if (enemy->fields.spawnprotect)
         {
-            return { posInScreenTrue.x ,posInScreenTrue.y,3 };/// vec 07
+            return { posInScreenTrue.x ,posInScreenTrue.y,3,chars->Pname };/// vec 07
         }
-        Vector2 asd = { posInScreenTrue.x ,posInScreenTrue.y,0 };
+        Vector2 asd = { posInScreenTrue.x ,posInScreenTrue.y,0,chars->Pname };
             return asd;
     
         

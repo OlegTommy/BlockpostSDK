@@ -7,6 +7,8 @@
 #include <windows.h>
 #include "framework/il2cpp-init.h"
 #include "WallHack.h"
+#include "framework/helpers.h"
+#include "framework/il2cpp-appdata.h"
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 USettings Settings;
 Present oPresent;
@@ -111,14 +113,32 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 				Vector2 Temper = wall.Renders(i);
 				if (Temper.d == -1)
 					continue;
+			
+		//		app::String* NAMES = Temper.str;
+
+	
+		
+
+			
+
+			 // copying the contents of the
+			 // string to char array
+		
+				char aaa[16] = {Temper.str[0], Temper.str[2],Temper.str[4], Temper.str[6], Temper.str[8] ,Temper.str[10], Temper.str[12], Temper.str[14], Temper.str[16], Temper.str[18], Temper.str[20], Temper.str[22], Temper.str[24], Temper.str[26], Temper.str[28], Temper.str[30] };
+		
 
 				if (Temper.d == 3 )
 				{
-					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 60, 52, 222, 255 }, 12, 2);
+				//	ImGui::GetBackgroundDrawList()->AddText({ Temper.x,Temper.y - 20 }, ImColor{ 255, 255, 222, 255 }, Temper.str);
+					ImGui::GetBackgroundDrawList()->AddText({ Temper.x - 10,Temper.y - 20 }, ImColor{ 255, 255, 222, 255 }, aaa);
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 5, ImColor{ 60, 52, 222, 255 }, 12, 2);
+					
+						
 				}
-				else
+				
 				{
-					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 235, 52, 200, 255 },12,2);
+					ImGui::GetBackgroundDrawList()->AddText({ Temper.x - 10,Temper.y-20 }, ImColor{ 255, 255, 222, 255 }, aaa);
+					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 5, ImColor{ 235, 52, 200, 255 },12,2);
 				}
 			}
 
