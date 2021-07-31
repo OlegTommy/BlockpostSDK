@@ -135,7 +135,7 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 					
 						
 				}
-				else
+				
 				{
 					ImGui::GetBackgroundDrawList()->AddText({ Temper.x - 30,Temper.y-20 }, ImColor{ 255, 255, 222, 255 }, aaa);
 					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 235, 52, 200, 255 },12,2);
