@@ -14,3 +14,15 @@ public:
 	float mysacky;
 	float dist;
 };
+
+
+class myCamera {
+public:
+	char pad[0x3b4];
+	Vector3 campos;
+};
+class cscamera {
+public:
+	char pad[8];
+	myCamera* camira;
+};

@@ -132,8 +132,6 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 				//	ImGui::GetBackgroundDrawList()->AddText({ Temper.x,Temper.y - 20 }, ImColor{ 255, 255, 222, 255 }, Temper.str);
 					ImGui::GetBackgroundDrawList()->AddText({ Temper.x - 30,Temper.y - 20 }, ImColor{ 255, 255, 222, 255 }, aaa);
 					ImGui::GetBackgroundDrawList()->AddCircle({ Temper.x,Temper.y }, 10, ImColor{ 60, 52, 222, 255 }, 12, 2);
-					
-						
 				}
 				else
 				{
@@ -173,6 +171,7 @@ DWORD WINAPI FunctTread(HMODULE hMod)
 	Name name;
 	AutomaticW asdddd; 
 	asdddd.Render();
+
 	while (true)
 	{
 		

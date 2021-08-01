@@ -17,7 +17,7 @@ private:
 Vector2 AimBot::GetDistanceAndAngle(Vector3 startPOS, Vector3 endPOS)
 {
     float deltaX = endPOS.x - startPOS.x;
-    float deltaY = endPOS.y - startPOS.y - 0;
+    float deltaY = endPOS.y - startPOS.y - 0.1f;
     float deltaZ = endPOS.z - startPOS.z;
 
     float dist = sqrt(
@@ -86,26 +86,27 @@ void AimBot::Render()
 
         PlayerData* enemy = Gets(i); // saksak 
         PlayerData* MyPlayer = GetLocals();
-
+       
         if (enemy->Pos.x == 0)
             continue;
         if (enemy->team == MyPlayer->team && teamcheck == true)
             continue;
-        else
-        {
+        
+        cscamera* mycam = (cscamera*)(*app::Controll__TypeInfo)->static_fields->csCam;
+
             while (true)
             {
                 if (!GetAsyncKeyState(VK_LBUTTON) && !GetAsyncKeyState(VK_LSHIFT) && toggle == true)
                     break;
-      
                 if (enemy->spawnprotect)
                     break;
                 if (enemy->health <= 0)
                     break;
-               
+                if (mycam->camira == nullptr)
+                    break;
                 Vector3 as = enemy->Pos;
-
-                Vector3 sack2 = MyPlayer->Pos;
+   
+                Vector3 sack2 = mycam->camira->campos;
                 if (sack2.x != -1 && sack2.y != -1 && sack2.z != -1)
                 {
                     if (enemy->bstate == 2 || enemy->bstate == 3)
@@ -147,7 +148,7 @@ void AimBot::Render()
                                 float normdis = GEYSEX.x;
                                 // -20 , 
                                 //  20
-                                mysacky = mysacky - normdis;
+                             mysacky = mysacky - normdis;
 
 
                                 if (GEYSEX.y < 0)
@@ -182,6 +183,6 @@ void AimBot::Render()
                     }
                 }
             }
-        }
+        
     }
 }
