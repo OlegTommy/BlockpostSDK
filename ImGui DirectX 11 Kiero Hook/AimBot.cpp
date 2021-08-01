@@ -100,7 +100,7 @@ void AimBot::Render()
                     break;
                 if (enemy->spawnprotect)
                     break;
-                if (enemy->health <= 0)
+                if (enemy->health <= 5)
                     break;
                 if (mycam->camira == nullptr)
                     break;

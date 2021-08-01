@@ -42,11 +42,14 @@ Vector2 WallHack::Renders(int i)
         return { -1, -1,-1 };/// vec 0
         app::PlayerData* enemy = GetPlayerData(i); // saksak 
         app::PlayerData* ÿ = GetLocals(); // saksak 
-
-        if (ÿ->fields.team == enemy->fields.team)
+        if (teamcheck == true)
         {
-            return { -1, -1,-1 };/// vec 07
+            if (ÿ->fields.team == enemy->fields.team)
+            {
+                return { -1, -1,-1 };/// vec 07
+            }
         }
+
         if (enemy->fields.health <= 1)
         {
             return { -1, -1,-1 };/// vec 07

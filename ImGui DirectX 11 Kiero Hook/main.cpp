@@ -20,6 +20,7 @@ ID3D11RenderTargetView* mainRenderTargetView;
 bool show = true;
 bool initOnce = false;
 AimBot aim;
+WallHack wall;
 void InitImGui()
 {
 	ImGui::CreateContext();
@@ -46,7 +47,7 @@ BOOL __stdcall StartThread(HMODULE hModule, LPTHREAD_START_ROUTINE StartAddress)
 bool init = false;
 HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
-	WallHack wall;
+	
 	uintptr_t gameoverlayrenderer = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("gameoverlayrenderer.dll")));
 	int height = *reinterpret_cast<int*>(gameoverlayrenderer + 0x1418DC);
 	int width = *reinterpret_cast<int*>(gameoverlayrenderer + 0x1418D8);
@@ -203,10 +204,13 @@ DWORD WINAPI FunctTread(HMODULE hMod)
 		}
 		if (Settings.TeamCheck)
 		{
+			wall.teamcheck = true;
 			aim.teamcheck = true;
+			
 		}
 		else
 		{
+			wall.teamcheck = false;
 			aim.teamcheck = false;
 		}
 	

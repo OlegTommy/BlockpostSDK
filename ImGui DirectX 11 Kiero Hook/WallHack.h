@@ -6,7 +6,7 @@ class WallHack
 public:
 	
 	Vector2 Renders(int i);
-	
+	bool teamcheck = false;
 };
 class WallHackNames
 {
