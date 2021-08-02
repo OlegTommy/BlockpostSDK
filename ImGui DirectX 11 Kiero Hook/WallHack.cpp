@@ -5,13 +5,6 @@
 #include "Vector.h"
 #define EntListBase 0xB35C3C
 #define EntListBase2 0xB35CA8
-app::PlayerData* GetLocals()
-{
-    offsetsM offsets;
-    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
-    app::PlayerData* uranus = (app::PlayerData*)offsets.GetPointerAddress(baseModule + EntListBase, { 0x5c, 0x13c , 0x0 });
-    return uranus;
-}
 
 app::PlayerData* GetPlayerData(UINT32 i)
 {
@@ -41,7 +34,7 @@ Vector2 WallHack::Renders(int i)
     if (offsets.GetPointerAddress(baseModule + EntListBase2, { 0x5C,0x0C, 0x10 + asddddd * 4,  0x28 }) == baseModule + EntListBase2)
         return { -1, -1,-1 };/// vec 0
         app::PlayerData* enemy = GetPlayerData(i); // saksak 
-        app::PlayerData* ÿ = GetLocals(); // saksak 
+        app::PlayerData* ÿ = (*app::Controll__TypeInfo)->static_fields->pl; // saksak 
         if (teamcheck == true)
         {
          

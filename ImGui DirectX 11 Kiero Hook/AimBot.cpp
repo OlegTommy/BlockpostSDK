@@ -85,11 +85,11 @@ void AimBot::Render()
             continue;
 
         PlayerData* enemy = Gets(i); // saksak 
-        PlayerData* MyPlayer = GetLocals();
+        app::PlayerData* MyPlayer = (*app::Controll__TypeInfo)->static_fields->pl;
        
         if (enemy->Pos.x == 0)
             continue;
-        if (enemy->team == MyPlayer->team && teamcheck == true)
+        if (enemy->team == MyPlayer->fields.team && teamcheck == true)
             continue;
         
         cscamera* mycam = (cscamera*)(*app::Controll__TypeInfo)->static_fields->csCam;
@@ -111,7 +111,7 @@ void AimBot::Render()
                 {
                     if (enemy->bstate == 2 || enemy->bstate == 3)
                     {
-                        if (MyPlayer->bstate != 2 || MyPlayer->bstate != 3)
+                        if (MyPlayer->fields.bstate != 2 || MyPlayer->fields.bstate != 3)
                         {
                             float SAH = 0.6;
                             sack2.y = sack2.y + SAH;
