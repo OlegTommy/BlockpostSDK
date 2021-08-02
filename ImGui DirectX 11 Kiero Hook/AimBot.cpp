@@ -117,14 +117,7 @@ void AimBot::Render()
                             sack2.y = sack2.y + SAH;
                         }
                     }
-                    if (enemy->bstate != 2 || enemy->bstate != 3)
-                    {
-                        if (MyPlayer->bstate == 2 || MyPlayer->bstate == 3)
-                        {
-                            float SAH = 0.6;
-                            sack2.y = sack2.y - SAH;
-                        }
-                    }
+
                     if (enemy->bstate == 4)
                     {
                         float SAH = 0.3;

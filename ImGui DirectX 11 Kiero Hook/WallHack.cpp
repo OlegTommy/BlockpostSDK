@@ -44,6 +44,7 @@ Vector2 WallHack::Renders(int i)
         app::PlayerData* ÿ = GetLocals(); // saksak 
         if (teamcheck == true)
         {
+         
             if (ÿ->fields.team == enemy->fields.team)
             {
                 return { -1, -1,-1 };/// vec 07
@@ -65,8 +66,9 @@ Vector2 WallHack::Renders(int i)
 
         posInScreenTrue.x = projected.x;
         posInScreenTrue.y = app::Screen_get_height(nullptr) - projected.y;
-
+  //      app::Client* aszzzz = (*app::Client__TypeInfo)->static_fields->cs;
         app::String* asdz= (enemy->fields.name);
+    //    app::Client_send_chatmsg(aszzzz , 0, enemy->fields.name, nullptr);
         WallHackNames* chars = (WallHackNames*)asdz;
     
  
