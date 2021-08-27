@@ -1,6 +1,8 @@
 #pragma once
 #include "includes.h"
 #include "Vector.h"
+#include "framework/il2cpp-appdata.h"
+
 class AimBot
 {
 public:
@@ -13,6 +15,7 @@ public:
 	float mysackx;
 	float mysacky;
 	float dist;
+	
 };
 
 
@@ -21,8 +24,20 @@ public:
 	char pad[0x3b4];
 	Vector3 campos;
 };
+
 class cscamera {
 public:
 	char pad[8];
 	myCamera* camira;
+};
+
+class CameraVisible {
+public:
+	char pad[0x3b4];
+	app::Vector3 campos;
+};
+class cscameraVisible {
+public:
+	char pad[8];
+	CameraVisible* camira;
 };
