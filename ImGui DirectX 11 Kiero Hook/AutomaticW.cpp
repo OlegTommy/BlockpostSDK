@@ -16,11 +16,21 @@
 	uintptr_t DistanceInj = baseModule + 0x2E0C24;
 	uintptr_t AcurInj = baseModule + 0x2E0BBD;
 	uintptr_t WaterSpeed = baseModule + 0x2DCF77;
+
 	//  2DCF77
 	VirtualProtect((LPVOID)Injectionpoint, 4, 0x40, &OldProtection);
 	VirtualProtect((LPVOID)DistanceInj, 4, 0x40, &OldProtection);
 	VirtualProtect((LPVOID)AcurInj, 4, 0x40, &OldProtection);
 	VirtualProtect((LPVOID)WaterSpeed, 4, 0x40, &OldProtection);
+	
+
+	uintptr_t sendwinfo = baseModule + 0x159730;
+
+	VirtualProtect((LPVOID)sendwinfo, 4, 0x40, &OldProtection);
+	BYTE* sack = reinterpret_cast<BYTE*>(sendwinfo);
+	*sack = 0xC3;
+	
+
 	BYTE* waters = reinterpret_cast<BYTE*>(WaterSpeed);
 	*waters = 0x30;
   BYTE* Bye = reinterpret_cast<BYTE*>(Injectionpoint);
