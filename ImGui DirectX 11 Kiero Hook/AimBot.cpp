@@ -3,9 +3,11 @@
 #include <array>
 #include <iostream>
 #include "Vector.h"
+
 //#include "framework/il2cpp-appdata.h"
 #define EntListBase 0xB35C3C
 #define EntListBase2 0xB35CA8
+
 
 //58
 class AngleView
@@ -39,46 +41,28 @@ Vector2 AimBot::GetDistanceAndAngle(Vector3 startPOS, Vector3 endPOS)
 
 void SetView(Vector2 pos)
 {
-    offsetsM offsets;
-    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
-
-    if (offsets.GetPointerAddress(baseModule + EntListBase2, { 0x5C,0x40 }) != 0)
-    {
-        float* x = reinterpret_cast<float*>(offsets.GetPointerAddress(baseModule + EntListBase, { 0x5C,0x40 }));
-        float* y = reinterpret_cast<float*>(offsets.GetPointerAddress(baseModule + EntListBase, { 0x5C,0x3C }));
-
-        *x = pos.x;
-        *y = pos.y;
-    }
-}
-PlayerData* GetLocals()
-{
-    offsetsM offsets;
-    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
-    PlayerData* uranus = (PlayerData*)offsets.GetPointerAddress(baseModule + EntListBase, { 0x5c, 0x13c , 0x0 });
-    return uranus;
+    app::Controll__StaticFields* controll = (*app::Controll__TypeInfo)->static_fields;
+    controll->rx = pos.y;
+    controll->ry = pos.x;
 }
 
 PlayerData* Gets(UINT32 i)
 {
     offsetsM offsets;
-    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll"))); 
+    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
     PlayerData* anus = (PlayerData*)offsets.GetPointerAddress(baseModule + EntListBase2, { 0x5C,0x0C, 0x10 + i * 0x4,0x0 });
     return anus;
 }
 void AimBot::Render()
 {
-
-
-
     GetMyPoss startpos;
     AngleView view;
     offsetsM offsets;
     uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
-   
+
     int health = 0;
-  
-    
+
+
     for (ULONG i = 0; i < 40; i++)
     {
         if (offsets.GetPointerAddress(baseModule + EntListBase2, { 0x5C,0x0C, 0x10 + i * 4,  0x28 }) == baseModule + EntListBase2)
@@ -86,96 +70,95 @@ void AimBot::Render()
 
         PlayerData* enemy = Gets(i); // saksak 
         app::PlayerData* MyPlayer = (*app::Controll__TypeInfo)->static_fields->pl;
-       
-        if (enemy->Pos.x == 0)
+
+        if (enemy->curPos.x == 0)
             continue;
         if (enemy->team == MyPlayer->fields.team && teamcheck == true)
             continue;
-        
+
         cscamera* mycam = (cscamera*)(*app::Controll__TypeInfo)->static_fields->csCam;
 
-            while (true)
+        while (true)
+        {
+            if (!GetAsyncKeyState(VK_LBUTTON) && !GetAsyncKeyState(VK_LSHIFT) && toggle == true)
+                break;
+            if (enemy->spawnprotect)
+                break;
+            if (enemy->health <= 5)
+                break;
+            if (mycam->camira == nullptr)
+                break;
+            if (enemy->bstate == 5)
+                break;
+           // if (enemy->leg_limit == 45)
+              //  break;
+
+            Vector3 enemypos = enemy->curPos;
+            Vector3 mypos = mycam->camira->campos;
+
+            if (mypos.x != -1 && mypos.y != -1 && mypos.z != -1)
             {
-                if (!GetAsyncKeyState(VK_LBUTTON) && !GetAsyncKeyState(VK_LSHIFT) && toggle == true)
-                    break;
-                if (enemy->spawnprotect)
-                    break;
-                if (enemy->health <= 5)
-                    break;
-                if (mycam->camira == nullptr)
-                    break;
-                Vector3 as = enemy->Pos;
-   
-                Vector3 sack2 = mycam->camira->campos;
-                if (sack2.x != -1 && sack2.y != -1 && sack2.z != -1)
+                if (enemy->bstate == 2 || enemy->bstate == 3)
                 {
-                    if (enemy->bstate == 2 || enemy->bstate == 3)
+                    if (MyPlayer->fields.bstate != 2 || MyPlayer->fields.bstate != 3)
                     {
-                        if (MyPlayer->fields.bstate != 2 || MyPlayer->fields.bstate != 3)
-                        {
-                            float SAH = 0.6;
-                            sack2.y = sack2.y + SAH;
-                        }
+                        float SAH = 0.6;
+                        mypos.y = mypos.y + SAH;
                     }
+                }
 
-                    if (enemy->bstate == 4)
-                    {
-                        float SAH = 0.3;
-                        sack2.y = sack2.y + SAH;
-                    }
-                    if (enemy->bstate != 5)
-                    {
-                        Vector2 GEYSEX = GetDistanceAndAngle(sack2, as);                       
-                   
+                if (enemy->bstate == 4)
+                {
+                    float SAH = 0.3;
+                    mypos.y = mypos.y + SAH;
+                }
+                if (enemy->bstate != 5)
+                {
+                    Vector2 AngletoTarger = GetDistanceAndAngle(mypos, enemypos);
 
-                        if (GEYSEX.d <= distanceFov)
+
+                    if (AngletoTarger.d <= distanceFov)
+                    {
+                        app::Controll__StaticFields* controll = (*app::Controll__TypeInfo)->static_fields;
+                        dist = AngletoTarger.d;
+                        float x = controll->rx;
+                        float y = controll->ry;
+                        mysackx = x;
+                        mysacky = y;
+
+                        float normdis = AngletoTarger.x;
+                        // -20 , 
+                        //  20
+                        mysacky = mysacky - normdis;
+
+
+                        if (AngletoTarger.y < 0)
                         {
-
-                            dist = GEYSEX.d;
-                            float x = *reinterpret_cast<float*>(offsets.GetPointerAddress(baseModule + EntListBase, { 0x5C,0x3c }));
-                            float y = *reinterpret_cast<float*>(offsets.GetPointerAddress(baseModule + EntListBase, { 0x5C,0x40 }));
-                            
-                                
-                                 mysackx = x;
-                                 mysacky = y;  
-                                float normdis = GEYSEX.x;
-                                // -20 , 
-                                //  20
-                             mysacky = mysacky - normdis;
-
-
-                                if (GEYSEX.y < 0)
-                                {
-                                    GEYSEX.y = 360 + GEYSEX.y;
-                                }
-                                if (x < 0)
-                                {
-                                    x = 360 + x;
-                                }
-                                // -20 , 20
-                                mysackx = GEYSEX.y - x;
-                  
-                                
-                                if (mysackx < -fov || mysackx > fov || mysacky < -fov  || mysacky > fov )
-                                {
-                                    break;
-                                }
-                                else {
-
-                                    SetView(GEYSEX);
-                                }
-                                  
-                                
-                                
-                            
+                            AngletoTarger.y = 360 + AngletoTarger.y;
                         }
-                        else
+                        if (x < 0)
+                        {
+                            x = 360 + x;
+                        }
+                        // -20 , 20
+                        mysackx = AngletoTarger.y - x;
+
+
+                        if (mysackx < -fov || mysackx > fov || mysacky < -fov || mysacky > fov)
                         {
                             break;
                         }
+                        else {
+
+                            SetView(AngletoTarger);
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
-        
+        }
     }
 }
