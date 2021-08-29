@@ -19,10 +19,9 @@ app::PlayerData* GetPlayerData(UINT32 i)
 Vector2 WallHack::Renders(int i)
 {
 
-    offsetsM offsets;
-    uintptr_t baseModule = reinterpret_cast<uintptr_t>(GetModuleHandle(TEXT("GameAssembly.dll")));
+    offsetsM offsets; 
     UINT asddddd = i;
-    if (offsets.GetPointerAddress(baseModule + EntListBase2, { 0x5C,0x0C, 0x10 + asddddd * 4,  0x28 }) == baseModule + EntListBase2)
+  if (offsets.GetPointerAddress(reinterpret_cast<uintptr_t>(GetModuleHandle("GameAssembly.dll")) + 0xB35CA8, { 0x5C,0x0C, (UINT)0x10 + i * 4,  0x28 }) == reinterpret_cast<uintptr_t>(GetModuleHandle("GameAssembly.dll")) + 0xB35CA8)
         return { -1, -1,-1 };/// vec 0
     ImVec2 posInScreenTrue;
     app::PlayerData* enemy = GetPlayerData(i); // saksak 
